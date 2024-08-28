@@ -15,30 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class Utils {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserEntityRepository entityRepository ;
-
     @Bean
     public CommandLineRunner initData() {
         return args -> {
-            String email = "demo2@demo.com";
-            String name = "User 1";
-            String password = "020202020";
 
-            entityRepository.findByEmail(email)
-                .flatMap(existingUser -> Mono.error(new RuntimeException("User already exists")))
-                .switchIfEmpty(
-                    Mono.defer(() -> {
-                        UserEntity newUser = new UserEntity(name, email, passwordEncoder.encode(password));
-                        return Mono.just(entityRepository.save(newUser));
-                    })
-                )
-                .subscribe(
-                    user -> System.out.println("User created successfully: " + name),
-                    error -> System.err.println("Error occurred: " + error.getMessage())
-                );
         };
     }
 
