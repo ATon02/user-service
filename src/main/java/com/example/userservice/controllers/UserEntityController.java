@@ -46,11 +46,10 @@ public class UserEntityController {
     @PostMapping
     @Operation(summary = "Create User", description = "Save User in the system. **Warning:** Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User saved correctly", content = @Content(mediaType = "application/json",
-                schema = @Schema(implementation = DTOUserEntityResponse.class))),
+            @ApiResponse(responseCode = "201", description = "User saved correctly"),
             @ApiResponse(responseCode = "400", description = "Bad request: User Not Created or Bad request: The field is empty or User not created due to duplicate email or The field is not valid format", content = @Content(mediaType = "text/plain", schema = @Schema(type = "string"))),
     })
-    public Mono<Object> createUserEntity(@RequestBody DTOUserEntityRequest UserEntity) {
+    public Mono<DTOUserEntityResponse> createUserEntity(@RequestBody DTOUserEntityRequest UserEntity) {
         return userEntityService.save(UserEntity);
     }
 

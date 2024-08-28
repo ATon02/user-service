@@ -13,7 +13,7 @@ public interface UserEntityService {
 
     Flux<DTOUserEntityResponse> getAll();
 
-    Mono<Object> save(DTOUserEntityRequest userEntityRequest);
+    Mono<DTOUserEntityResponse> save(DTOUserEntityRequest userEntityRequest);
 
     Mono<Void> deleteById(Long id);
 
